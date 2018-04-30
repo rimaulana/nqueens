@@ -176,8 +176,8 @@ func Test_draw(t *testing.T) {
 			args{
 				size: 3,
 				data: map[int][]int{
-					0: []int{1, 3},
-					1: []int{4, 6},
+					0: {1, 3},
+					1: {4, 6},
 				},
 			},
 			"┌─┬─┬─┐\n│Q│ │ │\n├─┼─┼─┤\n│ │Q│ │\n├─┼─┼─┤\n│ │ │Q│\n└─┴─┴─┘\n┌─┬─┬─┐\n│ │ │Q│\n├─┼─┼─┤\n│ │Q│ │\n├─┼─┼─┤\n│Q│ │ │\n└─┴─┴─┘\n",
@@ -187,7 +187,7 @@ func Test_draw(t *testing.T) {
 			args{
 				size: 1,
 				data: map[int][]int{
-					0: []int{},
+					0: {},
 				},
 			},
 			"┌─┐\n│Q│\n└─┘\n",
@@ -197,8 +197,8 @@ func Test_draw(t *testing.T) {
 			args{
 				size: 2,
 				data: map[int][]int{
-					0: []int{1},
-					1: []int{2},
+					0: {1},
+					1: {2},
 				},
 			},
 			"┌─┬─┐\n│Q│ │\n├─┼─┤\n│ │Q│\n└─┴─┘\n┌─┬─┐\n│ │Q│\n├─┼─┤\n│Q│ │\n└─┴─┘\n",
@@ -230,7 +230,18 @@ func Test_random(t *testing.T) {
 				size:   1,
 				sample: 1,
 				data: map[int][]int{
-					0: []int{},
+					0: {},
+				},
+			},
+			"┌─┐\n│Q│\n└─┘\n",
+		},
+		{
+			"1x1",
+			args{
+				size:   1,
+				sample: 2,
+				data: map[int][]int{
+					0: {},
 				},
 			},
 			"┌─┐\n│Q│\n└─┘\n",
@@ -241,8 +252,8 @@ func Test_random(t *testing.T) {
 				size:   2,
 				sample: 1,
 				data: map[int][]int{
-					0: []int{1},
-					1: []int{1},
+					0: {1},
+					1: {1},
 				},
 			},
 			"┌─┬─┐\n│Q│ │\n├─┼─┤\n│ │Q│\n└─┴─┘\n",
