@@ -35,7 +35,7 @@ func isDone(done int, col int, count *int, stack []int, result map[int][]int) bo
 // board size. It will find all the possible solution of the problem in
 // a map[int][]int datatype.
 func Bitwise(size int) (result map[int][]int) {
-	// initialize count of solution and map to accomodate the solutions
+	// initialize count of solution and map to accommodate the solutions
 	resultCount := 0
 	result = make(map[int][]int)
 
