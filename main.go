@@ -22,7 +22,8 @@ func main() {
 	flag.Parse()
 
 	solutionStart := time.Now()
-	result := solver.Bitwise(size)
+	bitwise := solver.New(size)
+	result := bitwise.Solve()
 	solutionElapsed := time.Since(solutionStart)
 
 	if display || (sample > -1) {
