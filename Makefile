@@ -10,4 +10,26 @@ $(GOLINT):
 
 .PHONY: lint
 lint: $(GOLINT)
-	golint $(PACKAGES)
+	for PKG in $(PACKAGES); do \
+		golint -set_exit_status $$PKG || exit 1; \
+	done;
+
+.PHONY: test
+test: clean
+	echo "mode: count" > coverage.out; \
+	for PKG in $(PACKAGES); do \
+		go test -v -covermode=count -coverprofile=profile.out $$PKG; \
+		if [ -f profile.out ]; then \
+        	cat profile.out | grep -v "mode:" >> coverage.out; \
+        	rm profile.out; \
+    	fi; \
+	done;
+
+.PHONY: cover
+cover: test
+	go tool cover -html=coverage.out -o=coverage.html; \
+	rm coverage.out;
+
+.PHONY: clean
+clean:
+	rm coverage*;
