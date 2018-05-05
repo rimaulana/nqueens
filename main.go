@@ -9,33 +9,45 @@ import (
 	"github.com/rimaulana/nqueens/solver"
 )
 
-func main() {
-	var (
-		size    int
-		display bool
-		sample  int
-	)
+var (
+	size   int
+	sample int
+)
 
+// init will always be called before main function
+// this will parse the flag passed to the os.Args
+func init() {
 	flag.IntVar(&size, "size", 4, "is an integer")
-	flag.BoolVar(&display, "draw", false, "is a boolean")
 	flag.IntVar(&sample, "sample", -1, "is an integer")
-	flag.Parse()
+}
 
+// main function of the program
+func main() {
+	// parse the flag passed to os.Args
+	flag.Parse()
+	// start the clock to time how long does it take
+	// for the program to calculate the solution
 	solutionStart := time.Now()
+	// initialize the solver
 	bitwise := solver.New(size)
+	// finding solutions
 	result := bitwise.Solve()
+	// stop the clock
 	solutionElapsed := time.Since(solutionStart)
 
-	if display || (sample > -1) {
+	// initialize board drawer
+	boards := board.New(size, sample, &result)
+	if sample > -1 {
 		var message string
 		drawStart := time.Now()
-		if sample > -1 {
-			fmt.Print(board.Random(size, sample, result))
-			message = fmt.Sprintf("%d sample boards were drawn in", sample)
+		boardStringStatus := "board"
+		if boards.Sample > 1 {
+			boardStringStatus += "s are"
 		} else {
-			fmt.Print(board.Draw(size, result))
-			message = "Boards were drawn in"
+			boardStringStatus += " is"
 		}
+		fmt.Print(boards.Draw())
+		message = fmt.Sprintf("%d %s drawn in", boards.Sample, boardStringStatus)
 		drawElapsed := time.Since(drawStart)
 		fmt.Printf("%s %s\n", message, drawElapsed)
 	}
