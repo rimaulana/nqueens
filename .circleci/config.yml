@@ -19,7 +19,8 @@ jobs:
           command: |
             ./cc-test-reporter before-build  
             make test
-            ./cc-test-reporter after-build --exit-code $?
+            ./cc-test-reporter format-coverage --input-type gocov cover.out 
+            ./cc-test-reporter upload-coverage 
       - run:
           name: Upload test result to codecov
           command: bash <(curl -s https://codecov.io/bash)
