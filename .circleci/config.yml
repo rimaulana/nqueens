@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Download Github Release Helper
+          command: go get -u github.com/tcnksm/ghr
+      - run:
           name: Download Code Climate Reporter
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -28,3 +31,9 @@ jobs:
       - run:
           name: Upload test result to codecov
           command: bash <(curl -s https://codecov.io/bash)
+      - run:
+          name: Create release binaries
+          command: make release VERSION=`git describe --tags`
+      - run:
+          name: Upload release to GitHub
+          command: ghr -u rimaulana -r nqueens --replace `git describe --tags` release/
