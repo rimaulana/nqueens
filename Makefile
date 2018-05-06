@@ -1,4 +1,5 @@
 BINARY := nqueens
+TEST_MODE ?= count
 VERSION ?= vlatest
 BIN_DIR := $(GOPATH)/bin
 GOLINT=$(BIN_DIR)/golint
@@ -18,11 +19,11 @@ lint: $(GOLINT)
 
 .PHONY: test
 test: clean
-	echo "mode: count" > coverage.out; \
+	echo "mode: $(TEST_MODE)" > c.out; \
 	for PKG in $(PACKAGES); do \
-		go test -v -covermode=count -coverprofile=profile.out $$PKG; \
+		go test -v -covermode=$(TEST_MODE) -coverprofile=profile.out $$PKG; \
 		if [ -f profile.out ]; then \
-        	cat profile.out | grep -v "mode:" >> cover.out; \
+        	cat profile.out | grep -v "mode:" >> c.out; \
         	rm profile.out; \
     	fi; \
 	done;
