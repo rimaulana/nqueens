@@ -22,19 +22,19 @@ test: clean
 	for PKG in $(PACKAGES); do \
 		go test -v -covermode=count -coverprofile=profile.out $$PKG; \
 		if [ -f profile.out ]; then \
-        	cat profile.out | grep -v "mode:" >> coverage.out; \
+        	cat profile.out | grep -v "mode:" >> cover.out; \
         	rm profile.out; \
     	fi; \
 	done;
 
 .PHONY: cover
 cover: test
-	go tool cover -html=coverage.out -o=coverage.html; \
+	go tool cover -html=cover.out -o=cover.html; \
 	rm coverage.out;
 
 .PHONY: clean
 clean:
-	for COV in $(shell ls | grep coverage); do \
+	for COV in $(shell ls | grep cover); do \
 		rm $$COV; \
 	done; \
 	rm -rf release;
