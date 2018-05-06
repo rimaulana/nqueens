@@ -1,3 +1,5 @@
+BINARY := nqueens
+VERSION ?= vlatest
 BIN_DIR := $(GOPATH)/bin
 GOLINT=$(BIN_DIR)/golint
 PACKAGES=$(shell go list ./... | grep -v /vendor/)
@@ -32,4 +34,15 @@ cover: test
 
 .PHONY: clean
 clean:
-	rm coverage*;
+	for COV in $(shell ls | grep coverage); do \
+		rm $$COV; \
+	done; \
+	rm -rf release;
+
+.PHONY: $(PLATFORMS)
+$(PLATFORMS): clean
+	mkdir -p release; \
+	GOOS=$(os) GOARCH=amd64 go build -o release/$(BINARY)-$(VERSION)-$(os)-amd64;
+
+.PHONY: release
+release: windows linux darwin
