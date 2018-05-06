@@ -17,10 +17,13 @@ jobs:
       - run:
           name: Testing codes
           command: |
-            ./cc-test-reporter before-build  
             make test
-            ./cc-test-reporter format-coverage --input-type gocov cover.out 
-            ./cc-test-reporter upload-coverage 
+      - run:
+          name: Code Climate coverage
+          command: |
+            ./cc-test-reporter before-build
+            go test --coverprofile c.out $(go list ./... | grep -v /vendor/)
+            ./cc-test-reporter after-build
       - run:
           name: Upload test result to codecov
           command: bash <(curl -s https://codecov.io/bash)
