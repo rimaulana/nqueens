@@ -30,14 +30,13 @@ test: clean
 
 .PHONY: cover
 cover: test
-	go tool cover -html=cover.out -o=cover.html; \
-	rm coverage.out;
+	go tool cover -html=c.out -o=coverage.html; \
+	rm -f c.out;
 
 .PHONY: clean
 clean:
-	for COV in $(shell ls | grep cover); do \
-		rm $$COV; \
-	done; \
+	rm -f coverage.html; \
+	rm -f c.out; \
 	rm -rf release;
 
 .PHONY: $(PLATFORMS)
