@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Board defined the stuct of board
+// Board defined the struct of board
 type Board struct {
 	Size            int
 	Data            *[][]int
@@ -113,7 +113,7 @@ func (brd *Board) Draw() string {
 		pick := brd.RandomGenerator.Perm(len(*brd.Data))
 		sample = pick[:brd.Sample]
 	}
-	for key := range sample {
+	for _, key := range sample {
 		result += header(brd.Size)
 		for j := 0; j < len((*brd.Data)[key]); j++ {
 			result += row(brd.Size, (*brd.Data)[key][j])
